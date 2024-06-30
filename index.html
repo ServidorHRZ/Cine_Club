@@ -34,12 +34,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
-        #countdown {
-            font-size: 3em;
-            margin-bottom: 40px;
-        }
         #videoContainer {
-            display: none;
             width: 80vw;
             height: calc(80vw * 0.5625); /* Relación de aspecto 16:9 */
             max-width: 800px;
@@ -126,7 +121,6 @@
 <body>
     <div class="main-section">
         <div class="container">
-            <div id="countdown"></div>
             <div id="videoContainer">
                 <iframe src="https://drive.google.com/file/d/1nhlHz3zs8tywLDMPo2EaUxFdCEcYZVX1/preview" allow="autoplay; fullscreen" allowfullscreen></iframe>
             </div>
@@ -144,58 +138,5 @@
             <a href="https://youtube.com/@eliteprogrammersglobal?si=5V1_5k0UHw-wZ697" class="social-button youtube" target="_blank">YouTube</a>
         </div>
     </div>
-
-    <script>
-        // Función para obtener el próximo sábado a las 9 PM
-        function getNextSaturday9PM() {
-            var now = new Date();
-            var nextSaturday = new Date(now);
-            nextSaturday.setDate(now.getDate() + ((6 - now.getDay() + 7) % 7));
-            nextSaturday.setHours(21, 0, 0, 0);
-            if (now.getDay() === 6 && now.getHours() >= 21) {
-                nextSaturday.setDate(nextSaturday.getDate() + 7);
-            }
-            return nextSaturday;
-        }
-
-        // Función para obtener el próximo jueves a las 11:59 PM
-        function getNextThursday1159PM() {
-            var now = new Date();
-            var nextThursday = new Date(now);
-            nextThursday.setDate(now.getDate() + ((4 - now.getDay() + 7) % 7));
-            nextThursday.setHours(23, 59, 59, 999);
-            if (now.getDay() === 4 && now.getHours() >= 23 && now.getMinutes() >= 59) {
-                nextThursday.setDate(nextThursday.getDate() + 7);
-            }
-            return nextThursday;
-        }
-
-        // Función para actualizar el contador
-        function updateCountdown() {
-            var now = new Date().getTime();
-            var nextSaturday = getNextSaturday9PM().getTime();
-            var nextThursday = getNextThursday1159PM().getTime();
-
-            var distance;
-            if (now >= nextSaturday && now <= nextThursday) {
-                distance = nextThursday - now;
-                document.getElementById("videoContainer").style.display = "block";
-            } else {
-                distance = nextSaturday - now;
-                document.getElementById("videoContainer").style.display = "none";
-            }
-
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-        }
-
-        // Actualizar el contador cada segundo
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
-    </script>
 </body>
 </html>
